@@ -1,7 +1,17 @@
 import requests
 import os
+from concurrent.futures import ThreadPoolExecutor
 
-def download_file_stream(url, filename=None, chunk_size=8192):
+base_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_2023-01.parquet"
+
+TAXI_TYPES = [
+    "fhvhv", # High Volume For-Hire Vehicle Trip Records
+    "yellow",
+    "green",
+    "fhv" # For-Hire Vehicle Trip Records 
+]
+
+def download_file_stream(url, filename=None, chunk_size=30 * 1024):
     response = requests.get(url, stream=True)
     response.raise_for_status()
     
@@ -27,7 +37,7 @@ def download_file_stream(url, filename=None, chunk_size=8192):
                 
                 if total_size:
                     percent = (downloaded / total_size) * 100
-                    print(f"\rProgress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end='')
+                    print(f"\r{filename} Progress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end='')
     
     print(f"\nDownload completed: {filename}")
     return filename
@@ -35,8 +45,6 @@ def download_file_stream(url, filename=None, chunk_size=8192):
 if __name__ == "__main__":
     file_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
     
-    try:
-        downloaded_file = download_file_stream(file_url)
-        print(f"File saved as: {downloaded_file}")
-    except requests.exceptions.RequestException as e:
-        print(f"Download failed: {e}")
+    with ThreadPoolExecutor() as executor:
+        executor.map(download_file_stream, [base_url.format(taxi_type=t_type) for t_type in TAXI_TYPES])
+    
