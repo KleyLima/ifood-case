@@ -37,7 +37,7 @@ def download_file_stream(url, filename=None, chunk_size=30 * 1024):
                 
                 if total_size:
                     percent = (downloaded / total_size) * 100
-                    print(f"\r{filename} Progress: {percent:.1f}% ({downloaded}/{total_size} bytes)", end='')
+                    print(f"\r{filename} Progress: {percent:.1f}% ({downloaded  / (1024*1024):.2f}/{total_size  / (1024*1024):.2f} MB)", end='')
     
     print(f"\nDownload completed: {filename}")
     return filename
