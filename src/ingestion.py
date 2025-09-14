@@ -1,5 +1,4 @@
 import requests
-import os
 from concurrent.futures import ThreadPoolExecutor
 
 base_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/{taxi_type}_tripdata_2023-01.parquet"
@@ -42,9 +41,7 @@ def download_file_stream(url, filename=None, chunk_size=30 * 1024):
     print(f"\nDownload completed: {filename}")
     return filename
 
-if __name__ == "__main__":
-    file_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet"
-    
+if __name__ == "__main__":    
     with ThreadPoolExecutor() as executor:
         executor.map(download_file_stream, [base_url.format(taxi_type=t_type) for t_type in TAXI_TYPES])
     
