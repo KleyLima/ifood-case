@@ -6,6 +6,7 @@ import boto3
 from botocore.config import Config
 import io
 from os import getenv
+from databricks.sdk.runtime import dbutils
 
 TAXI_TYPES = [
     "fhvhv",  # High Volume For-Hire Vehicle Trip Records
@@ -18,8 +19,8 @@ TAXI_TYPES = [
 def check_and_create_bucket(bucket_name, region="us-east1"):
     print(f"Checking bucket {bucket_name}")
     session = boto3.Session(
-        aws_access_key_id=getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=getenv("AWS_ACCESS_KEY_ID") or dbutils.secrets.get(scope = "aws", key = "AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY") or dbutils.secrets.get(scope = "aws", key = "AWS_SECRET_ACCESS_KEY"),
         region_name="us-east-1",
     )
 
@@ -42,8 +43,8 @@ def download_file_stream_and_upload(
     url, filename=None, bucket_name="taxis-raw-data", chunk_size=15 * 1024 * 1024
 ):
     session = boto3.Session(
-        aws_access_key_id=getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY"),
+        aws_access_key_id=getenv("AWS_ACCESS_KEY_ID") or dbutils.secrets.get(scope = "aws", key = "AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY") or dbutils.secrets.get(scope = "aws", key = "AWS_SECRET_ACCESS_KEY"),
         region_name="us-east-1",
     )
     config = Config(
