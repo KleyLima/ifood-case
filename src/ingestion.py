@@ -5,6 +5,7 @@ from itertools import product
 import boto3
 from botocore.config import Config
 import io
+from os import getenv
 
 TAXI_TYPES = [
     "fhvhv", # High Volume For-Hire Vehicle Trip Records
@@ -15,7 +16,9 @@ TAXI_TYPES = [
 
 def check_and_create_bucket(bucket_name, region='us-east1'):
     print(f"Checking bucket {bucket_name}")
-    session = boto3.Session(profile_name="default")
+    session = boto3.Session(aws_access_key_id=getenv("AWS_ACCESS_KEY_ID"),
+                            aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY"),
+                            region_name='us-east-1')
 
     s3 = session.client('s3', region_name='us-east-1')    
     response = s3.list_buckets()
@@ -31,7 +34,9 @@ def get_file_folder(filename: str):
     return filename.split("_")[0]
 
 def download_file_stream_and_upload(url, filename=None, bucket_name="taxis-raw-data", chunk_size=15 * 1024 * 1024):
-    session = boto3.Session(profile_name="default")
+    session = boto3.Session(aws_access_key_id=getenv("AWS_ACCESS_KEY_ID"),
+                            aws_secret_access_key=getenv("AWS_SECRET_ACCESS_KEY"),
+                            region_name='us-east-1')
     config = Config(
         connect_timeout=5,
         read_timeout=60,
