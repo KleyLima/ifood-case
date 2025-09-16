@@ -5,7 +5,7 @@ spark = SparkSession.builder.appName("app").getOrCreate()
 
 green_df = spark.table("raw.green") \
     .select("VendorID", "passenger_count", "total_amount", 
-            "tpep_pickup_datetime", "tpep_dropoff_datetime")
+            "lpep_pickup_datetime", "lpep_dropoff_datetime")
 
 only_valid_vendors = green_df.filter(col("VendorID").isNotNull())
 
