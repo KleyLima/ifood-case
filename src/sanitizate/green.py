@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col
+from pyspark.sql.functions import col, year, month
 
 spark = SparkSession.builder.appName("app").getOrCreate()
 
@@ -10,6 +10,8 @@ green_df = spark.table("raw.green") \
 only_valid_vendors = green_df.filter(col("VendorID").isNotNull())
 
 valid_passenger_cnt = only_valid_vendors.filter(col("passenger_count") > 0)
+
+desired_range_only = valid_passenger_cnt.filter((year("lpep_pickup_datetime") == 2023) & (month("lpep_pickup_datetime") < 6))
 
 spark.sql("CREATE SCHEMA IF NOT EXISTS trusted")
 
