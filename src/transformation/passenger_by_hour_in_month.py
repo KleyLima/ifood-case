@@ -7,9 +7,12 @@ df = spark.table("trusted.taxi_data_unified")
 
 
 result_df = (
-    df.groupBy(hour("pickup_datetime").alias("hour"))
+    df.groupBy(
+        month("pickup_datetime").alias("month"),
+        hour("pickup_datetime").alias("hour")
+    )
     .agg(round(avg("passenger_count"), 2).alias("average_count"))
-    .orderBy("hour")
+    .orderBy("month", "hour")
 )
 
 result_df.write.mode("overwrite").format("delta").saveAsTable(
