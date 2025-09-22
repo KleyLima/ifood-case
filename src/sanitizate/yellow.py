@@ -24,6 +24,9 @@ desired_range_only = valid_passenger_cnt.filter(
 )
 print("Keeping data on desired range (January to May of 2023)")
 
+only_valid_datatime = desired_range_only.filter(col("lpep_dropoff_datetime") > col("lpep_pickup_datetime"))
+print("Validating departure and arriving order")
+
 spark.sql("CREATE SCHEMA IF NOT EXISTS trusted")
 print("Schema created")
 
