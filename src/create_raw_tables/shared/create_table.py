@@ -60,5 +60,6 @@ def merge_schemas_and_create_table(table_name, numeric_columns):
         df.write.format("parquet").mode("overwrite").option(
             "path", f"s3://taxis-raw-data/{table_name}_table_data/"
         ).saveAsTable(f"raw.{table_name}")
+        print(f"Table raw.{table_name} created")
     else:
         print("No files were successfully read")
