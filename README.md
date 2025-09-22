@@ -16,4 +16,10 @@ This case is defined to be executed in [Databricks Platform](https://www.databri
 - Save your secrets with:
     - `databricks secrets put-secret aws {AWS_ACCESS_KEY_ID}`
     - `databricks secrets put-secret aws {AWS_SECRET_ACCESS_KEY}`
+- Clone the repo inside your workspace in Databricks UI. Workspace > Create > Git Folder
+- Execute the pipeline
+- Check the Dashboards for the answers 
+
+## Caveats Regards S3 Integration
+Is possible to use the `External Location` on Databricks to fetch data from S3 as a table automatically but in this present case the disparity in the files schemas causes a lot of silent problems, with many records missing in the datalake. This problem was fixed using the `create_raw_table` step.
 
