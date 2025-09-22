@@ -1,4 +1,4 @@
-from pyspark.sql.functions import lit
+from pyspark.sql.functions import lit, month
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName("app").getOrCreate()
@@ -18,6 +18,8 @@ yellow_data_renamed = yellow_data_label.withColumnRenamed(
 ).withColumnRenamed("tpep_dropoff_datetime", "dropoff_datetime")
 
 taxi_data_unified = yellow_data_renamed.unionByName(green_data_renamed)
+
+taxi_data_unified = taxi_data_unified.withColumn("moth", month("pickup_datetime"))
 
 taxi_data_unified.write.mode("overwrite").format("delta").saveAsTable(
     "trusted.taxi_data_unified"
