@@ -31,5 +31,5 @@ print("Validating departure and arriving order")
 spark.sql("CREATE SCHEMA IF NOT EXISTS trusted")
 print("Schema created")
 
-valid_passenger_cnt.write.mode("overwrite").format("delta").saveAsTable("trusted.green")
+only_valid_datatime.write.mode("overwrite").format("delta").saveAsTable("trusted.green")
 print("Table created")
