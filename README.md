@@ -9,6 +9,11 @@ This case is defined to be executed in [Databricks Platform](https://www.databri
 - Setting up your S3 credentials in Databricks Secrets (for data fetching and save)
 
 ## Setting Up
-- Download Databricks CLI
-- Authenticate with `databricks auth login --host {YOUR_INSTANCE_URL}
+- Create a Databricks Free Edition Instance
+- Download Databricks CLI with `pip install databricks-sdk`
+- Authenticate with `databricks auth login --host {YOUR_INSTANCE_URL}`
+- Create a secret scope with `databricks secrets create-scope aws`
+- Save your secrets with:
+    - `databricks secrets put-secret aws {AWS_ACCESS_KEY_ID}`
+    - `databricks secrets put-secret aws {AWS_SECRET_ACCESS_KEY}`
 
