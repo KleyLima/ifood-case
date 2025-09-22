@@ -1,7 +1,13 @@
 # ifood-case
 A data engineering pipeline for insights for NYC Taxi Trips Data.
 
-This case is defined to be executed in [Databricks Platform](https://www.databricks.com/br). But the majority of its content can be executed anywhere.
+This case is defined to be executed in [Databricks Platform](https://www.databricd-case
+A data engineering pipeline for insights for NYC Taxi Trips Data.
+
+This caseks.com/br). But the majority of its content can be executed anywhere.
+
+## Pipeline Overview
+![Alt text](docs/pipeline.png)
 
 ## Requeriments
 - AWS Credential with access to S3
