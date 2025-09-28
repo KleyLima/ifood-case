@@ -18,8 +18,8 @@ A data engineering pipeline for insights for NYC Taxi Trips Data.
 - Authenticate with `databricks auth login --host {YOUR_INSTANCE_URL}`
 - Create a secret scope with `databricks secrets create-scope aws`
 - Save your secrets with:
-    - `databricks secrets put-secret aws {AWS_ACCESS_KEY_ID}`
-    - `databricks secrets put-secret aws {AWS_SECRET_ACCESS_KEY}`
+    - `databricks secrets put-secret aws AWS_ACCESS_KEY_ID`
+    - `databricks secrets put-secret aws AWS_SECRET_ACCESS_KEY`
 - Clone the repo inside your workspace in Databricks UI. Workspace > Create > Git Folder
 - Execute the pipeline
 - Check the Dashboards for the answers 
